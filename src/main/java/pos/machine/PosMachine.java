@@ -32,8 +32,19 @@ public class PosMachine {
         return null;
     }
 
-    public List<ItemInfo> convertToItems(){
-        return ItemDataLoader.loadAllItemInfos();
+    public List<ItemInfo> convertToItems() {
+        List<String> barcodes = ItemDataLoader.loadBarcodes();
+        List<ItemInfo> itemInfos = ItemDataLoader.loadAllItemInfos();
+        List<ItemInfo> barcodesItem = new ArrayList<>();
+
+        for (int i = 0; i < barcodes.size(); i++) {
+            for (int j = 0; j < itemInfos.size(); j++) {
+                if (barcodes.get(i).equals(itemInfos.get(j).getBarcode())) {
+                    barcodesItem.add(itemInfos.get(j));
+                }
+            }
+        }
+        return barcodesItem;
     }
 
     public List<Item> calculateItemsSubtotal(String itemWithDetails){
